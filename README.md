@@ -38,7 +38,6 @@ Then say "start day" or create your first project with `/new-project`.
 - **Projects**: Use `/new-project my-app` to scaffold a new project with all standard files
 - **People**: People files are auto-created when you delegate tasks, or copy `people/_template.md`
 - **Repos**: Add sibling repo paths to `.claude/rules/{project}.md` so Claude can check git logs and PRs
-- **Reminders**: Requires a Telegram bot + cron job to deliver (see Reminders section below)
 
 ## File structure
 
@@ -48,7 +47,6 @@ pm-brain/
 ├── inbox.md                       # Quick capture — dump anything here
 ├── standup.md                     # Daily standup prep
 ├── weekly.md                      # Weekly review template
-├── reminders.json                 # Timed reminders (Telegram delivery)
 ├── daily/                         # Auto-generated daily session logs
 ├── people/
 │   └── _template.md               # Template for new person files
@@ -77,15 +75,6 @@ pm-brain/
 | `/bug` | Log a bug with severity — writes to project's `bugs.md` |
 | `/decide` | Capture a decision with context — writes to `decisions.md`, checks side effects |
 | `/new-project` | Scaffold a new project folder with all standard files + rule |
-
-## Reminders
-
-PM Brain can create timed reminders stored in `reminders.json`. To actually deliver them, you need:
-
-1. A Telegram bot (create one via [@BotFather](https://t.me/botfather))
-2. A cron job that checks `reminders.json` every minute and sends due reminders
-
-This is optional — the rest of PM Brain works without it.
 
 ## Tips
 

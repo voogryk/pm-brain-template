@@ -36,25 +36,21 @@ For each project folder in `projects/`, read:
 - `bugs.md`
 - `decisions.md` (if exists)
 
-## 3. Check today's reminders
-
-Read `reminders.json` and check for any pending reminders due today. Include them in the briefing under a "Reminders" section so the user knows what's coming up.
-
-## 4. Read all people files
+## 3. Read all people files
 
 ```bash
 ls people/*.md
 ```
 Read every person file (skip `_template.md`). Know who's doing what.
 
-## 5. Check yesterday's daily log
+## 4. Check yesterday's daily log
 
 ```bash
 ls daily/ | sort | tail -1
 ```
 Read the latest daily file if it exists — know what happened last session.
 
-## 6. Check open PRs
+## 5. Check open PRs
 
 <!-- Customize with your GitHub org/repos. Example: -->
 <!-- gh pr list --repo your-org/your-repo --state open 2>/dev/null -->
@@ -62,7 +58,7 @@ Read the latest daily file if it exists — know what happened last session.
 If you have repos configured in `.claude/rules/`, check their open PRs.
 PRs are actionable — they need review, approval, or merge. Surface anything that's been open too long.
 
-## 7. Build the morning briefing
+## 6. Build the morning briefing
 
 Present to the user:
 
@@ -84,12 +80,12 @@ List all open bugs from project `bugs.md` files. Ask: "Which of these bugs do yo
 ### f. Today's plate
 Suggest what the user should focus on today based on priorities and what's unblocked.
 
-## 8. Ask
+## 7. Ask
 
 - "Anything new from Slack/Jira overnight?"
 - "Any changes to what I just summarized?"
 
-## 9. Build today's plan & standup
+## 8. Build today's plan & standup
 
 After the user confirms / adds info, build the day plan. Write into `standup.md` with `Last updated: YYYY-MM-DD`:
 - **Yesterday**: from daily log

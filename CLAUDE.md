@@ -36,7 +36,6 @@ Respond in the same language the user writes in, or in English by default.
 - **`standup.md`** — Reusable standup/daily prep template. Updated each session if relevant.
 - **`weekly.md`** — Weekly review template. What happened, what's next, blockers, follow-ups.
 - **`daily/YYYY-MM-DD.md`** — Daily session logs. Auto-created. Archive of what was discussed/decided each day.
-- **`reminders.json`** — Timed reminders delivered via Telegram.
 
 ### Project files (`projects/{project-name}/`)
 
@@ -79,7 +78,7 @@ User asks "what's going on with X?" or "where are we on Y?":
 3. Give honest assessment
 
 ### Delegation
-User says "tell John to do X" or "John is handling X". **Invoke the `/delegate` skill** — it handles updating `delegated.md`, `people/{person}.md`, and offers to set follow-up reminders.
+User says "tell John to do X" or "John is handling X". **Invoke the `/delegate` skill** — it handles updating `delegated.md` and `people/{person}.md`.
 
 ### End of day
 User says "finish day", "wrap up", "end of day", or similar. **Invoke the `/finish-day` skill** — asks questions one by one, updates all files, creates `daily/YYYY-MM-DD.md` as a permanent reference log, and ends on a positive note.
@@ -102,51 +101,3 @@ User reports a bug or says "found a bug". **Invoke the `/bug` skill** — logs i
 ### Decision logging
 User describes a decision or says "we decided". **Invoke the `/decide` skill** — logs it in `decisions.md` with context, people, impact, and checks for side effects on other tasks.
 
-## Reminders / Notifications
-
-You can create timed reminders that will be delivered to the user via Telegram (and other channels in the future). A cron job checks `reminders.json` every minute and sends notifications for due reminders.
-
-### When to create reminders
-
-- User says "remind me to X at/in Y" — create a reminder immediately
-- During morning kickoff, if something is due today, mention it and offer to set a reminder
-- When delegating work with a deadline, offer to set a follow-up reminder
-
-### How to create a reminder
-
-Write directly to `reminders.json`. The file uses file locking, so it's safe to write while the cron checker is running.
-
-**JSON schema:**
-```json
-{
-  "reminders": [
-    {
-      "id": "20260209-090000-a1b2",
-      "text": "Follow up with John about the API refactor",
-      "due": "2026-02-09T09:00:00",
-      "created": "2026-02-08T14:30:22",
-      "source": "terminal",
-      "channels": ["telegram"],
-      "status": "pending",
-      "sent_at": null,
-      "repeat": null
-    }
-  ]
-}
-```
-
-**Field rules:**
-- **id**: `YYYYMMDD-HHmmss-XXXX` where XXXX is 4 random hex chars. Generate with current timestamp.
-- **due**: ISO datetime, local time (no timezone). Parse "in 30 minutes", "at 14:00", "tomorrow at 9:00" etc.
-- **created**: current ISO datetime
-- **source**: `"terminal"` when created from CLI Claude, `"telegram"` when created from bot
-- **channels**: array of delivery channels. Use `["telegram"]` by default.
-- **status**: always `"pending"` for new reminders
-- **sent_at**: always `null` for new reminders
-- **repeat**: `null` for one-shot reminders (repeat support coming later)
-
-**Important:** When writing to `reminders.json`, read the file first, append the new reminder to the existing array, and write back. Don't overwrite existing reminders.
-
-### Checking reminders
-
-During morning kickoff (`start-day`), check `reminders.json` for any pending reminders due today. Mention them in the briefing.

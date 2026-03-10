@@ -39,15 +39,8 @@ Add the task to their `## Current Tasks` section.
 
 If the person doesn't have a file yet, create one from the template (`people/_template.md`) and ask the user for role/capacity info.
 
-### 3. Offer a reminder
-
-If there's a deadline, offer: "Want me to set a reminder to follow up on [date]?"
-
-If yes, create the reminder in `reminders.json`.
-
 ## Confirm
 
 Tell the user exactly what was written and where. Be specific:
 - "Added to `projects/{project}/delegated.md`"
 - "Updated `people/{person}.md` current tasks"
-- "Reminder set for Friday 9:00"
