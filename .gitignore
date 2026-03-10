@@ -1,0 +1,10 @@
+# OS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Sensitive — if you ever put credentials or personal notes here
+*.secret.md
+private/
